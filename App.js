@@ -310,7 +310,7 @@ const styles = StyleSheet.create({
 	modalHeader: {
 		flexDirection: "row",
 		justifyContent: "center",
-		marginBottom: 10,
+		marginBottom: 15,
 	},
 	modalTitle: {
 		fontSize: 20,
