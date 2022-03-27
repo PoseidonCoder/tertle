@@ -41,6 +41,7 @@ export default function App() {
 	const [guessValue, setGuessValue] = useState("");
 	const [guessStatus, setGuessStatus] = useState({});
 	const [showSettings, setShowSettings] = useState(false);
+	const [won, setWon] = useState(false);
 	const currentRow = useRef(0);
 	const currentColumn = useRef(0);
 	const answer = wordle.answers[current];
@@ -52,6 +53,8 @@ export default function App() {
 				wordle.answers.includes(guessValue)
 			) {
 				board.forEach((row) => {
+					let correct = 0;
+
 					row.forEach((char, i) => {
 						if (answer.includes(char.toLowerCase())) {
 							if (answer.indexOf(char.toLowerCase()) === i) {
@@ -59,6 +62,8 @@ export default function App() {
 									guess[char] = "#6aaa64";
 									return guess;
 								});
+
+								correct++;
 							} else {
 								setGuessStatus((guess) => {
 									guess[char] = "#c9b458";
@@ -72,25 +77,28 @@ export default function App() {
 							});
 						}
 					});
+
+					if (correct === 5) setWon(true);
 				});
+
 				currentRow.current++;
 				currentColumn.current = 0;
-				setGuessValue("");
 			} else {
 				const boardCopy = board.slice();
 				boardCopy[currentRow.current] = ["", "", "", "", ""];
 				setBoard(boardCopy);
-				setGuessValue("");
 
 				currentColumn.current = 0;
 
 				alert("Not in word list");
 			}
+
+			setGuessValue("");
 		}
 	}
 
 	function guess(text) {
-		if (text.match(/[a-z]/i) || text == "") {
+		if ((text.match(/[a-z]/i) || text == "") && !won) {
 			setBoard((board) => {
 				board[currentRow.current] = board[currentRow.current].map((_, i) =>
 					text[i] ? text[i].toUpperCase() : ""
