@@ -151,7 +151,7 @@ export default function App() {
 				<Text
 					style={{
 						fontSize: 37,
-						fontWeight: 700,
+						fontWeight: "700",
 					}}
 				>
 					<TouchableOpacity onPress={back}>
@@ -294,10 +294,10 @@ const styles = StyleSheet.create({
 	button: {
 		margin: 3,
 		backgroundColor: "lightgray",
-		borderRadius: 5,
-		width: 50,
-		height: 60,
-		fontSize: 20,
+		borderRadius: 4,
+		minWidth: 30,
+		height: 58,
+		fontWeight: "bold",
 		alignItems: "center",
 		justifyContent: "center",
 	},
