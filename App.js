@@ -140,7 +140,9 @@ export default function App() {
 						</TouchableOpacity>
 					</View>
 
-					<Anchor href="#">Open in Github</Anchor>
+					<Anchor href="https://github.com/PoseidonCoder/tertle">
+						Open in Github
+					</Anchor>
 					<Divider />
 					<Button title="answer" onPress={() => alert(answer)} />
 					<Divider />
