@@ -107,6 +107,7 @@ export default function App() {
 	function reset() {
 		currentRow.current = 0;
 		currentColumn.current = 0;
+		setGuessStatus({});
 		setBoard(JSON.parse(JSON.stringify(boardDefault)));
 	}
 
