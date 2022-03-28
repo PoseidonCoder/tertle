@@ -10,14 +10,17 @@ export default StyleSheet.create({
 	row: {
 		flexDirection: "row",
 	},
-	box: {
+	tile: {
 		borderWidth: 2,
 		borderColor: "lightgray",
 		width: 50,
 		height: 50,
-		fontSize: 25,
 		margin: 2,
+	},
+	tileText: {
+		margin: "auto",
 		fontWeight: "bold",
+		fontSize: 25,
 	},
 	input: {
 		height: 40,

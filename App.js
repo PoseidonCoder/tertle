@@ -174,28 +174,40 @@ export default function App() {
 			{board.map((row, i) => (
 				<View style={styles.row} key={i}>
 					{row.map((char, k) => (
-						<Text
+						<View
 							style={
 								i < currentRow.current ||
 								(won.current && i === currentRow.current)
 									? [
-											styles.box,
+											styles.tile,
 											{
 												backgroundColor: answer.includes(char.toLowerCase())
 													? answer.indexOf(char.toLowerCase()) === k
 														? "#6aaa64"
 														: "#c9b458"
 													: "#86888a",
-												color: "white",
 												borderWidth: 0,
 											},
 									  ]
-									: styles.box
+									: styles.tile
 							}
 							key={k}
 						>
-							{char}
-						</Text>
+							<Text
+								style={[
+									styles.tileText,
+									{
+										color:
+											i < currentRow.current ||
+											(won.current && i === currentRow.current)
+												? "white"
+												: "black",
+									},
+								]}
+							>
+								{char}
+							</Text>
+						</View>
 					))}
 				</View>
 			))}
