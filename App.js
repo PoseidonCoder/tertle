@@ -176,7 +176,8 @@ export default function App() {
 					{row.map((char, k) => (
 						<Text
 							style={
-								i < currentRow.current
+								i < currentRow.current ||
+								(won.current && i === currentRow.current)
 									? [
 											styles.box,
 											{
