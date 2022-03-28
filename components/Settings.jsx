@@ -1,6 +1,6 @@
 import Anchor from "./Anchor";
 import { Modal, Button, Text, TouchableOpacity, View } from "react-native";
-import { Feather } from "@expo/vector-icons";
+import { Feather, AntDesign } from "@expo/vector-icons";
 import Divider from "./Divider";
 import styles from "../styles";
 
@@ -20,6 +20,9 @@ const Settings = ({ visible, onClose, answer }) => (
 			<Divider />
 			<Button title="answer" onPress={() => alert(answer)} />
 			<Divider />
+			<Text style={{ color: "gray" }}>
+				Made with <AntDesign name="heart" size={10} color="gray" /> by Lukas D
+			</Text>
 		</View>
 	</Modal>
 );
