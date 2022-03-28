@@ -143,6 +143,7 @@ export default function App() {
 	return (
 		<SafeAreaView style={styles.container}>
 			<Settings
+				answer={answer}
 				visible={showSettings}
 				onClose={() => setShowSettings(!showSettings)}
 			/>

@@ -4,7 +4,7 @@ import { Feather } from "@expo/vector-icons";
 import Divider from "./Divider";
 import styles from "../styles";
 
-const Settings = ({ visible, onClose }) => (
+const Settings = ({ visible, onClose, answer }) => (
 	<Modal visible={visible} animationType="slide" onRequestClose={onClose}>
 		<View style={[styles.container, styles.modal]}>
 			<View style={styles.modalHeader}>
