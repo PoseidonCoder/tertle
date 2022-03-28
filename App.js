@@ -41,7 +41,7 @@ export default function App() {
 	const [guessValue, setGuessValue] = useState("");
 	const [guessStatus, setGuessStatus] = useState({});
 	const [showSettings, setShowSettings] = useState(false);
-	const [won, setWon] = useState(false);
+	const won = useRef(false);
 	const currentRow = useRef(0);
 	const currentColumn = useRef(0);
 	const answer = wordle.answers[current];
@@ -78,11 +78,17 @@ export default function App() {
 						}
 					});
 
-					if (correct === 5) setWon(true);
+					if (correct === 5) won.current = true;
 				});
 
-				currentRow.current++;
-				currentColumn.current = 0;
+				if (!won.current) {
+					if (board[5][4] !== "") {
+						alert("The answer was: " + answer);
+					} else {
+						currentRow.current++;
+						currentColumn.current = 0;
+					}
+				}
 			} else {
 				const boardCopy = board.slice();
 				boardCopy[currentRow.current] = ["", "", "", "", ""];
@@ -98,7 +104,11 @@ export default function App() {
 	}
 
 	function guess(text) {
-		if ((text.match(/[a-z]/i) || text == "") && !won) {
+		if (
+			(text.match(/[a-z]/i) || text == "") &&
+			!won.current &&
+			board[5][4] === ""
+		) {
 			setBoard((board) => {
 				board[currentRow.current] = board[currentRow.current].map((_, i) =>
 					text[i] ? text[i].toUpperCase() : ""
@@ -108,13 +118,14 @@ export default function App() {
 
 			setGuessValue(text);
 
-			currentColumn.current++;
+			if (board[currentRow.current][4] === "") currentColumn.current++;
 		}
 	}
 
 	function reset() {
 		currentRow.current = 0;
 		currentColumn.current = 0;
+		won.current = false;
 		setGuessStatus({});
 		setBoard(JSON.parse(JSON.stringify(boardDefault)));
 	}
