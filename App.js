@@ -12,11 +12,11 @@ import {
 	AntDesign,
 	MaterialCommunityIcons,
 	Fontisto,
-	Feather,
 } from "@expo/vector-icons";
-import Anchor from "./components/Anchor";
 import Divider from "./components/Divider";
 import wordle from "./wordle.json";
+import Settings from "./components/Settings";
+import styles from "./styles";
 
 const milisecondsInDay = 1000 * 3600 * 24;
 
@@ -142,32 +142,10 @@ export default function App() {
 
 	return (
 		<SafeAreaView style={styles.container}>
-			<Modal
+			<Settings
 				visible={showSettings}
-				animationType="slide"
-				onRequestClose={() => setShowSettings(!showSettings)}
-			>
-				<View style={[styles.container, styles.modal]}>
-					<View style={styles.modalHeader}>
-						<Text style={styles.modalTitle}>SETTINGS</Text>
-						<TouchableOpacity onPress={() => setShowSettings(!showSettings)}>
-							<Feather
-								name="x"
-								size={25}
-								color="black"
-								style={styles.modalClose}
-							/>
-						</TouchableOpacity>
-					</View>
-
-					<Anchor href="https://github.com/PoseidonCoder/tertle">
-						Open in Github
-					</Anchor>
-					<Divider />
-					<Button title="answer" onPress={() => alert(answer)} />
-					<Divider />
-				</View>
-			</Modal>
+				onClose={() => setShowSettings(!showSettings)}
+			/>
 
 			<View style={styles.header}>
 				<Text
@@ -284,62 +262,3 @@ export default function App() {
 		</SafeAreaView>
 	);
 }
-
-const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		backgroundColor: "#fff",
-		alignItems: "center",
-		justifyContent: "center",
-	},
-	row: {
-		flexDirection: "row",
-	},
-	box: {
-		borderWidth: 2,
-		borderColor: "lightgray",
-		width: 50,
-		height: 50,
-		fontSize: 25,
-		margin: 2,
-		fontWeight: "bold",
-	},
-	input: {
-		height: 40,
-		margin: 12,
-		borderWidth: 1,
-		padding: 10,
-	},
-	buttonRow: {
-		flexDirection: "row",
-	},
-	button: {
-		margin: 3,
-		backgroundColor: "lightgray",
-		borderRadius: 4,
-		minWidth: 30,
-		height: 58,
-		fontWeight: "bold",
-		alignItems: "center",
-		justifyContent: "center",
-	},
-	header: {
-		flexDirection: "row",
-	},
-	modalHeader: {
-		flexDirection: "row",
-		justifyContent: "center",
-		marginBottom: 15,
-	},
-	modalTitle: {
-		fontSize: 20,
-		fontWeight: "bold",
-	},
-	modalClose: {
-		flex: 1,
-	},
-	modal: {
-		width: "50%",
-		alignSelf: "center",
-	},
-});
