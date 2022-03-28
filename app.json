@@ -1,34 +1,33 @@
 {
-  "expo": {
-    "name": "tertle",
-    "slug": "tertle",
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
-    "updates": {
-      "fallbackToCacheTimeout": 0
-    },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
-    "ios": {
-      "supportsTablet": true
-    },
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
-      }
-    },
-    "web": {
-      "favicon": "./assets/favicon.png"
-    },
-    "description": "An open-source version of the popular word game known as Wordle, built using React Native. The app also provides a full Wordle archive with answers provided.",
-    "githubUrl": "https://github.com/PoseidonCoder/tertle"
-  }
+	"expo": {
+		"name": "tertle",
+		"slug": "tertle",
+		"owner": "poseidoncoder",
+		"version": "1.0.0",
+		"orientation": "portrait",
+		"icon": "./assets/icon.png",
+		"splash": {
+			"image": "./assets/splash.png",
+			"resizeMode": "contain",
+			"backgroundColor": "#ffffff"
+		},
+		"updates": {
+			"fallbackToCacheTimeout": 0
+		},
+		"assetBundlePatterns": ["**/*"],
+		"ios": {
+			"supportsTablet": true
+		},
+		"android": {
+			"adaptiveIcon": {
+				"foregroundImage": "./assets/adaptive-icon.png",
+				"backgroundColor": "#FFFFFF"
+			}
+		},
+		"web": {
+			"favicon": "./assets/favicon.png"
+		},
+		"description": "An open-source version of the popular word game known as Wordle, built using React Native. The app also provides a full Wordle archive with answers provided.",
+		"githubUrl": "https://github.com/PoseidonCoder/tertle"
+	}
 }
