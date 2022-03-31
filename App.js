@@ -1,22 +1,12 @@
 import { useState, useRef } from "react";
-import {
-	StyleSheet,
-	Text,
-	View,
-	Button,
-	SafeAreaView,
-	Modal,
-	TouchableOpacity,
-} from "react-native";
-import {
-	AntDesign,
-	MaterialCommunityIcons,
-	Fontisto,
-} from "@expo/vector-icons";
+import { Text, View, SafeAreaView, TouchableOpacity } from "react-native";
+import { AntDesign, Fontisto } from "@expo/vector-icons";
 import Divider from "./components/Divider";
 import wordle from "./wordle.json";
 import Settings from "./components/Settings";
 import styles from "./styles";
+import Board from "./components/Board";
+import Keyboard from "./components/Keyboard";
 
 const milisecondsInDay = 1000 * 3600 * 24;
 
@@ -29,11 +19,6 @@ function dateToWordle(date) {
 }
 
 const boardDefault = [...Array(6)].map((e) => Array(5).fill(""));
-const letters = [
-	["q", "w", "e", "r", "t", "y", "u", "i", "o", "p"],
-	["a", "s", "d", "f", "g", "h", "j", "k", "l"],
-	["z", "x", "c", "v", "b", "n", "m"],
-];
 
 export default function App() {
 	const [board, setBoard] = useState(JSON.parse(JSON.stringify(boardDefault)));
@@ -44,7 +29,16 @@ export default function App() {
 	const won = useRef(false);
 	const currentRow = useRef(0);
 	const currentColumn = useRef(0);
+	const lastRow = useRef(0);
 	const answer = wordle.answers[current];
+
+	function charColor(char, i) {
+		return answer.includes(char.toLowerCase())
+			? answer.indexOf(char.toLowerCase()) === i
+				? "#6aaa64"
+				: "#c9b458"
+			: "#86888a";
+	}
 
 	function submit() {
 		if (board[currentRow.current][4] !== "") {
@@ -89,6 +83,8 @@ export default function App() {
 						currentColumn.current = 0;
 					}
 				}
+
+				lastRow.current++;
 			} else {
 				const boardCopy = board.slice();
 				boardCopy[currentRow.current] = ["", "", "", "", ""];
@@ -125,6 +121,7 @@ export default function App() {
 	function reset() {
 		currentRow.current = 0;
 		currentColumn.current = 0;
+		lastRow.current = 0;
 		won.current = false;
 		setGuessStatus({});
 		setBoard(JSON.parse(JSON.stringify(boardDefault)));
@@ -171,108 +168,21 @@ export default function App() {
 
 			<Divider />
 
-			{board.map((row, i) => (
-				<View style={styles.row} key={i}>
-					{row.map((char, k) => (
-						<View
-							style={
-								i < currentRow.current ||
-								(won.current && i === currentRow.current)
-									? [
-											styles.tile,
-											{
-												backgroundColor: answer.includes(char.toLowerCase())
-													? answer.indexOf(char.toLowerCase()) === k
-														? "#6aaa64"
-														: "#c9b458"
-													: "#86888a",
-												borderWidth: 0,
-											},
-									  ]
-									: styles.tile
-							}
-							key={k}
-						>
-							<Text
-								style={[
-									styles.tileText,
-									{
-										color:
-											i < currentRow.current ||
-											(won.current && i === currentRow.current)
-												? "white"
-												: "black",
-									},
-								]}
-							>
-								{char}
-							</Text>
-						</View>
-					))}
-				</View>
-			))}
+			<Board
+				board={board}
+				lastRow={lastRow}
+				guessStatus={guessStatus}
+				charColor={charColor}
+			/>
 
-			{letters.map((row, i) => (
-				<View key={i} style={styles.buttonRow}>
-					{i === 2 && (
-						<TouchableOpacity
-							style={[
-								styles.button,
-								{
-									width: 60,
-								},
-							]}
-							onPress={submit}
-						>
-							<Text
-								style={{
-									color: board[currentRow.current][4] === "" ? "gray" : "black",
-									fontWeight: "bold",
-								}}
-							>
-								ENTER
-							</Text>
-						</TouchableOpacity>
-					)}
-					{row.map((letter, k) => (
-						<TouchableOpacity
-							style={
-								guessStatus[letter.toUpperCase()]
-									? [
-											styles.button,
-											{
-												backgroundColor: guessStatus[letter.toUpperCase()],
-											},
-									  ]
-									: styles.button
-							}
-							key={k}
-							onPress={() => guess(guessValue + letter)}
-						>
-							<Text
-								style={{
-									fontSize: 20,
-									color: guessStatus[letter.toUpperCase()] ? "white" : "black",
-								}}
-							>
-								{letter.toUpperCase()}
-							</Text>
-						</TouchableOpacity>
-					))}
-					{i === 2 && (
-						<TouchableOpacity
-							style={[styles.button, { width: 50 }]}
-							onPress={() => guess(guessValue.slice(0, -1))}
-						>
-							<MaterialCommunityIcons
-								name="backspace-outline"
-								size={30}
-								color="black"
-							/>
-						</TouchableOpacity>
-					)}
-				</View>
-			))}
+			<Keyboard
+				guessStatus={guessStatus}
+				guessValue={guessValue}
+				submit={submit}
+				guess={guess}
+				board={board}
+				currentRow={currentRow}
+			/>
 		</SafeAreaView>
 	);
 }

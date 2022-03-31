@@ -33,6 +33,7 @@ export default StyleSheet.create({
 	},
 	button: {
 		margin: 3,
+		textTransform: "uppercase",
 		backgroundColor: "lightgray",
 		borderRadius: 4,
 		minWidth: 30,
