@@ -168,12 +168,7 @@ export default function App() {
 
 			<Divider />
 
-			<Board
-				board={board}
-				lastRow={lastRow}
-				guessStatus={guessStatus}
-				charColor={charColor}
-			/>
+			<Board board={board} currentRow={currentRow} charColor={charColor} />
 
 			<Keyboard
 				guessStatus={guessStatus}

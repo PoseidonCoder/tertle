@@ -1,13 +1,13 @@
 import { View, Text } from "react-native";
 import styles from "../styles";
 
-export default function Board({ board, lastRow, charColor }) {
+export default function Board({ board, currentRow, charColor }) {
 	return board.map((row, i) => (
 		<View style={styles.row} key={i}>
 			{row.map((char, k) => (
 				<View
 					style={
-						i < lastRow.current
+						i < currentRow.current
 							? [
 									styles.tile,
 									{
@@ -23,7 +23,7 @@ export default function Board({ board, lastRow, charColor }) {
 						style={[
 							styles.tileText,
 							{
-								color: i < lastRow.current ? "white" : "black",
+								color: i < currentRow.current ? "white" : "black",
 							},
 						]}
 					>
