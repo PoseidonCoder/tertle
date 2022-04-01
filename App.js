@@ -50,26 +50,13 @@ export default function App() {
 					let correct = 0;
 
 					row.forEach((char, i) => {
-						if (answer.includes(char.toLowerCase())) {
-							if (answer.indexOf(char.toLowerCase()) === i) {
-								setGuessStatus((guess) => {
-									guess[char] = "#6aaa64";
-									return guess;
-								});
+						setGuessStatus((guess) => {
+							guess[char] = charColor(char, i);
 
-								correct++;
-							} else {
-								setGuessStatus((guess) => {
-									guess[char] = "#c9b458";
-									return guess;
-								});
-							}
-						} else {
-							setGuessStatus((guess) => {
-								guess[char] = "#86888a";
-								return guess;
-							});
-						}
+							if (guess[char] === "#6aaa64") correct++;
+
+							return guess;
+						});
 					});
 
 					if (correct === 5) won.current = true;
@@ -79,11 +66,11 @@ export default function App() {
 					if (board[5][4] !== "") {
 						alert("The answer was: " + answer);
 					} else {
-						currentRow.current++;
 						currentColumn.current = 0;
 					}
 				}
 
+				currentRow.current++;
 				lastRow.current++;
 			} else {
 				const boardCopy = board.slice();
