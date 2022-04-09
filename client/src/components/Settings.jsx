@@ -3,6 +3,7 @@ import { Modal, Button, Text, TouchableOpacity, View } from "react-native";
 import { Feather, AntDesign } from "@expo/vector-icons";
 import Divider from "./Divider";
 import styles from "../styles";
+import { connect } from "react-redux";
 
 const Settings = ({ visible, onClose, answer }) => (
 	<Modal visible={visible} animationType="slide" onRequestClose={onClose}>
@@ -27,4 +28,6 @@ const Settings = ({ visible, onClose, answer }) => (
 	</Modal>
 );
 
-export default Settings;
+const mapStateToProps = ({ singleplayer: { answer } }) => ({ answer });
+
+export default connect(mapStateToProps)(Settings);

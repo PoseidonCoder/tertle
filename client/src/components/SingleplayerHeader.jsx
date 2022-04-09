@@ -7,13 +7,12 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { next, back } from "../actions";
 
-const SingplayerHeader = ({ answer, current, next, back }) => {
+const SingplayerHeader = ({ current, next, back }) => {
 	const [showSettings, setShowSettings] = useState(false);
 
 	return (
 		<>
 			<Settings
-				answer={answer}
 				visible={showSettings}
 				onClose={() => setShowSettings(!showSettings)}
 			/>
@@ -37,8 +36,7 @@ const SingplayerHeader = ({ answer, current, next, back }) => {
 	);
 };
 
-const mapStateToProps = ({ singleplayer: { answer, current } }) => ({
-	answer,
+const mapStateToProps = ({ singleplayer: { current } }) => ({
 	current,
 });
 
