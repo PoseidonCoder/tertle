@@ -8,7 +8,7 @@ const boardDefault = [...Array(6)].map((e) => Array(5).fill(""));
 const current = dateToWordle(new Date().getTime());
 
 const INITIAL_STATE = {
-	board: JSON.parse(JSON.stringify(boardDefault)),
+	board: boardDefault,
 	guessValue: "",
 	current,
 	guessStatus: {},
@@ -27,6 +27,19 @@ const reducer = (state = INITIAL_STATE, action) => {
 		guessStatus: { ...state.guessStatus },
 		wordle: { ...state.wordle },
 	};
+
+	const reset = (current) => ({
+		...stateCopy,
+		current,
+		board: boardDefault,
+		guessValue: "",
+		currentRow: 0,
+		currentColumn: 0,
+		renderRows: 0,
+		won: false,
+		guessStatus: {},
+		answer: stateCopy.wordle.answers[current],
+	});
 
 	switch (action.type) {
 		case actions.SUBMITTED:
@@ -89,6 +102,12 @@ const reducer = (state = INITIAL_STATE, action) => {
 
 				return stateCopy;
 			}
+
+		case actions.NEXT:
+			return reset(stateCopy.current++);
+
+		case actions.BACK:
+			return reset(stateCopy.current--);
 
 		default:
 			return state;

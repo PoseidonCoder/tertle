@@ -4,13 +4,11 @@ import { Text, View, TouchableOpacity } from "react-native";
 import { AntDesign, Fontisto } from "@expo/vector-icons";
 import styles from "../styles";
 import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { next, back } from "../actions";
 
-const SingplayerHeader = ({ answer, current }) => {
+const SingplayerHeader = ({ answer, current, next, back }) => {
 	const [showSettings, setShowSettings] = useState(false);
-
-	const back = () => {};
-
-	const next = () => {};
 
 	return (
 		<>
@@ -44,4 +42,7 @@ const mapStateToProps = ({ singleplayer: { answer, current } }) => ({
 	current,
 });
 
-export default connect(mapStateToProps)(SingplayerHeader);
+const mapDispatchToProps = (dispatch) =>
+	bindActionCreators({ next, back }, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(SingplayerHeader);
