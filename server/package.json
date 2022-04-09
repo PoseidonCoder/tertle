@@ -1,0 +1,14 @@
+{
+	"name": "server",
+	"version": "1.0.0",
+	"main": "index.js",
+	"license": "MIT",
+	"type": "module",
+	"scripts": {
+		"start": "nodemon ."
+	},
+	"dependencies": {
+		"nodemon": "^2.0.15",
+		"socket.io": "^4.4.1"
+	}
+}

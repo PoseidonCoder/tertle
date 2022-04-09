@@ -1,6 +1,11 @@
 import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
+	headerText: {
+		fontSize: 18,
+		fontWeight: 500,
+		color: "rgb(28, 28, 30)",
+	},
 	container: {
 		flex: 1,
 		backgroundColor: "#fff",

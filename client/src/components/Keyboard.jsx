@@ -1,6 +1,9 @@
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { TouchableOpacity, Text, View } from "react-native";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 import styles from "../styles";
+import { submit, type } from "../actions";
 
 const letters = [
 	["q", "w", "e", "r", "t", "y", "u", "i", "o", "p"],
@@ -8,15 +11,15 @@ const letters = [
 	["z", "x", "c", "v", "b", "n", "m"],
 ];
 
-export default function Keyboard({
+const Keyboard = ({
 	submit,
-	guess,
+	type,
 	board,
 	currentRow,
 	guessStatus,
 	guessValue,
-}) {
-	return letters.map((row, i) => (
+}) =>
+	letters.map((row, i) => (
 		<View key={i} style={styles.buttonRow}>
 			{i === 2 && (
 				<TouchableOpacity
@@ -30,7 +33,7 @@ export default function Keyboard({
 				>
 					<Text
 						style={{
-							color: board[currentRow.current][4] === "" ? "gray" : "black",
+							color: board[currentRow][4] === "" ? "gray" : "black",
 							fontWeight: "bold",
 						}}
 					>
@@ -51,7 +54,7 @@ export default function Keyboard({
 							: styles.button
 					}
 					key={k}
-					onPress={() => guess(guessValue + letter)}
+					onPress={() => type(guessValue + letter)}
 				>
 					<Text
 						style={{
@@ -66,7 +69,7 @@ export default function Keyboard({
 			{i === 2 && (
 				<TouchableOpacity
 					style={[styles.button, { width: 50 }]}
-					onPress={() => guess(guessValue.slice(0, -1))}
+					onPress={() => type(guessValue.slice(0, -1))}
 				>
 					<MaterialCommunityIcons
 						name="backspace-outline"
@@ -77,4 +80,12 @@ export default function Keyboard({
 			)}
 		</View>
 	));
-}
+
+const mapStateToProps = ({
+	singleplayer: { submit, guess, board, currentRow, guessStatus, guessValue },
+}) => ({ submit, guess, board, currentRow, guessStatus, guessValue });
+
+const mapDispatchToProps = (dispatch) =>
+	bindActionCreators({ submit, type }, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Keyboard);

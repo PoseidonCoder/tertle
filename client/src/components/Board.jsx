@@ -1,17 +1,19 @@
 import { View, Text } from "react-native";
+import { connect } from "react-redux";
 import styles from "../styles";
+import { charColor } from "../util";
 
-export default function Board({ board, currentRow, charColor }) {
-	return board.map((row, i) => (
+const Board = ({ board, renderRows, answer }) =>
+	board.map((row, i) => (
 		<View style={styles.row} key={i}>
 			{row.map((char, k) => (
 				<View
 					style={
-						i < currentRow.current
+						i < renderRows
 							? [
 									styles.tile,
 									{
-										backgroundColor: charColor(char, k),
+										backgroundColor: charColor(answer, char, k),
 										borderWidth: 0,
 									},
 							  ]
@@ -23,7 +25,7 @@ export default function Board({ board, currentRow, charColor }) {
 						style={[
 							styles.tileText,
 							{
-								color: i < currentRow.current ? "white" : "black",
+								color: i < renderRows ? "white" : "black",
 							},
 						]}
 					>
@@ -33,4 +35,11 @@ export default function Board({ board, currentRow, charColor }) {
 			))}
 		</View>
 	));
-}
+
+const mapStateToProps = ({ singleplayer: { board, renderRows, answer } }) => ({
+	board,
+	renderRows,
+	answer,
+});
+
+export default connect(mapStateToProps)(Board);
