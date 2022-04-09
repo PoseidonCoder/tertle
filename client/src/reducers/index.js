@@ -104,10 +104,10 @@ const reducer = (state = INITIAL_STATE, action) => {
 			}
 
 		case actions.NEXT:
-			return reset(stateCopy.current++);
+			return reset((stateCopy.current += 1));
 
 		case actions.BACK:
-			return reset(stateCopy.current--);
+			return reset((stateCopy.current -= 1));
 
 		default:
 			return state;
