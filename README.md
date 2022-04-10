@@ -4,7 +4,7 @@
 
 An all-in-one Wordle clone
 
-![Tertle Logo](logo.svg)
+![Tertle Logo](client/assets/icon.svg)
 
 ## https://tertle.netlify.app
 
