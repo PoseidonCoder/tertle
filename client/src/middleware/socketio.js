@@ -1,4 +1,5 @@
 import { io } from "socket.io-client";
+import * as actions from "../constants";
 
 export default function createSocketIOMiddleware(
 	url,
@@ -11,10 +12,16 @@ export default function createSocketIOMiddleware(
 		socket.on(eventName, dispatch);
 
 		return (next) => (action) => {
+			if (!action || !action.type) return false;
+
 			if (action.type.indexOf("server/") === 0) {
+				if (action.type === actions.JOIN_GAME && !action.payload)
+					action.payload = socket.id;
+				console.log(action);
 				socket.emit(eventName, action);
-				return next(action);
 			}
+
+			return next(action);
 		};
 	};
 }

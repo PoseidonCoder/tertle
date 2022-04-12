@@ -9,12 +9,16 @@ const io = new Server(server, {
 let rooms = {};
 
 io.on("connection", (socket) => {
-	socket.on("create room", () => {
-		rooms[socket.id] = {};
-	});
-
-	socket.on("join room", ({ id }) => {
-		socket.join(id);
+	socket.on("action", ({ type, payload }) => {
+		switch (type.split("server/")[1]) {
+			case "JOIN_GAME":
+				socket.join(payload);
+				io.sockets
+					.in(payload)
+					.emit("action", { type: "PLAYER_JOINED", payload: socket.id });
+				if (!rooms[payload]) rooms[socket.id] = {};
+				break;
+		}
 	});
 });
 

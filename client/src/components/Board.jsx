@@ -36,7 +36,7 @@ const Board = ({ board, renderRows, answer }) =>
 		</View>
 	));
 
-const mapStateToProps = ({ singleplayer: { board, renderRows, answer } }) => ({
+const mapStateToProps = ({ board: { board, renderRows, answer } }) => ({
 	board,
 	renderRows,
 	answer,

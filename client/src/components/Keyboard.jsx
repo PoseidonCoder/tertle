@@ -82,7 +82,7 @@ const Keyboard = ({
 	));
 
 const mapStateToProps = ({
-	singleplayer: { submit, guess, board, currentRow, guessStatus, guessValue },
+	board: { submit, guess, board, currentRow, guessStatus, guessValue },
 }) => ({ submit, guess, board, currentRow, guessStatus, guessValue });
 
 const mapDispatchToProps = (dispatch) =>

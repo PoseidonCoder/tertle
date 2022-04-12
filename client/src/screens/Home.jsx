@@ -1,7 +1,13 @@
 import styles from "../styles";
 import { Button, SafeAreaView, Text } from "react-native";
+import { connect, useDispatch } from "react-redux";
+import { join_game } from "../actions";
 
-export default function Home({ navigation }) {
+const Home = ({ navigation, players }) => {
+	const dispatch = useDispatch();
+
+	if (players.length > 0) navigation.navigate("Multiplayer");
+
 	return (
 		<SafeAreaView style={styles.container}>
 			<Button
@@ -10,9 +16,13 @@ export default function Home({ navigation }) {
 			/>
 			<Text>or</Text>
 			<Button
-				title="multiplayer"
-				onPress={() => navigation.navigate("Multiplayer")}
+				title="create a multiplayer game"
+				onPress={() => dispatch(join_game())}
 			/>
 		</SafeAreaView>
 	);
-}
+};
+
+const mapStateToProps = ({ multiplayer: { players } }) => ({ players });
+
+export default connect(mapStateToProps)(Home);
