@@ -10,12 +10,18 @@ let rooms = {};
 
 io.on("connection", (socket) => {
 	socket.on("action", ({ type, payload }) => {
-		console.log(type, payload);
 		switch (type.split("server/")[1]) {
 			case "JOIN_GAME":
 				if (!rooms[payload]) rooms[payload] = { players: [] };
 				rooms[payload].players.push(socket.id);
 				socket.join(payload);
+
+				if (rooms[payload].started)
+					socket.emit({
+						type: "GAME_STARTED",
+						payload: rooms[payload].time,
+					});
+
 				io.sockets
 					.in(payload)
 					.emit("action", { type: "PLAYERS", payload: rooms[payload].players });
@@ -30,6 +36,17 @@ io.on("connection", (socket) => {
 					.in(payload)
 					.emit("action", { type: "PLAYERS", payload: rooms[payload].players });
 				break;
+
+			case "START_GAME":
+				if (rooms[socket.id]) {
+					rooms[socket.id].time = new Date().getTime();
+					rooms[socket.id].started = true;
+
+					io.sockets.in(socket.id).emit("action", {
+						type: "GAME_STARTED",
+						payload: rooms[socket.id].time,
+					});
+				}
 		}
 	});
 });

@@ -7,7 +7,14 @@ import socket from "../socket";
 import { useFocusEffect } from "@react-navigation/native";
 import { useCallback } from "react";
 
-const Multiplayer = ({ players, route, join_game, leave_game, start_game }) => {
+const Multiplayer = ({
+	players,
+	route,
+	join_game,
+	leave_game,
+	start_game,
+	started,
+}) => {
 	useFocusEffect(
 		useCallback(() => {
 			join_game(route.params.id);
@@ -26,21 +33,30 @@ const Multiplayer = ({ players, route, join_game, leave_game, start_game }) => {
 
 	return (
 		<View style={styles.container}>
-			<Text>Joined:</Text>
-
-			{players.map((player) => (
-				<Text key={player}>{player}</Text>
-			))}
-
-			<Button title="share link" onPress={shareLink} />
-			{route.params.id === socket.id && (
-				<Button title="start game" onPress={startGame} />
+			{started ? (
+				<>
+					<Text>starting game...</Text>
+				</>
+			) : (
+				<>
+					<Text>Joined:</Text>
+					{players.map((player) => (
+						<Text key={player}>{player}</Text>
+					))}
+					<Button title="share link" onPress={shareLink} />
+					{route.params.id === socket.id && (
+						<Button title="start game" onPress={start_game} />
+					)}{" "}
+				</>
 			)}
 		</View>
 	);
 };
 
-const mapStateToProps = ({ multiplayer: { players } }) => ({ players });
+const mapStateToProps = ({ multiplayer: { players, started } }) => ({
+	players,
+	started,
+});
 const mapDispatchToProps = (dispatch) =>
 	bindActionCreators({ join_game, leave_game, start_game }, dispatch);
 

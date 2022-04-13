@@ -1,8 +1,8 @@
 import * as actions from "../constants";
 
 const INITIAL_STATE = {
-	game_id: null,
 	players: [],
+	time: null,
 	started: false,
 };
 
@@ -13,6 +13,14 @@ const multiplayer = (state = INITIAL_STATE, action) => {
 				...state,
 				players: action.payload,
 			};
+
+		case actions.GAME_STARTED:
+			return {
+				...state,
+				time: action.payload,
+				started: true,
+			};
+
 		default:
 			return state;
 	}

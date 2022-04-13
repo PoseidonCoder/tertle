@@ -6,3 +6,4 @@ export const JOIN_GAME = "server/JOIN_GAME";
 export const LEAVE_GAME = "server/LEAVE_GAME";
 export const START_GAME = "server/START_GAME";
 export const PLAYERS = "PLAYERS";
+export const GAME_STARTED = "GAME_STARTED";
