@@ -1,26 +1,26 @@
 import { Text, View, TouchableOpacity, Button } from "react-native";
-import { AntDesign } from "@expo/vector-icons";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { join_game } from "../actions";
+import { useEffect } from "react";
 import styles from "../styles";
-import { io } from "socket.io-client";
-import { useState } from "react";
+import socket from "../socket";
 
-// const socket = io("ws://localhost:3000");
+const Multiplayer = ({ players, route, join_game }) => {
+	useEffect(() => join_game(route?.params?.id), []);
 
-const Multiplayer = ({ navigation }) => (
-	<Text style={{ fontSize: 50 }}>Coming soon...</Text>
-);
-// const [createGameScreen, setCreateGameScreen] = useState();
+	return (
+		<View style={styles.container}>
+			<Text>Joined:</Text>
+			{players.map((player) => (
+				<Text key={player}>{player}</Text>
+			))}
+		</View>
+	);
+};
 
-// return createGameScreen == undefined ? (
-// 	<>
-// 		<Button title="Create Game" onPress={() => setCreateGameScreen(true)} />
-// 		<Text>or</Text>
-// 		<Button title="Join Game" onPress={() => setCreateGameScreen(false)} />
-// 	</>
-// ) : createGameScreen ? (
-// 	<Text>create game</Text>
-// ) : (
-// 	<Text>join game</Text>
-// );
+const mapStateToProps = ({ multiplayer: { players } }) => ({ players });
+const mapDispatchToProps = (dispatch) =>
+	bindActionCreators({ join_game }, dispatch);
 
-export default Multiplayer;
+export default connect(mapStateToProps, mapDispatchToProps)(Multiplayer);

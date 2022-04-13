@@ -1,9 +1,10 @@
 import { createStore, applyMiddleware, compose } from "redux";
 import reducers from "./reducers";
 import createSocketIOMiddleware from "./middleware/socketio";
+import socket from "./socket";
 
 const composedEnhancers = compose(
-	applyMiddleware(createSocketIOMiddleware("ws://localhost:3000")),
+	applyMiddleware(createSocketIOMiddleware(socket)),
 	window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
 

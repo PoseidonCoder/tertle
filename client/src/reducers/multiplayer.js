@@ -7,10 +7,10 @@ const INITIAL_STATE = {
 
 const multiplayer = (state = INITIAL_STATE, action) => {
 	switch (action.type) {
-		case actions.PLAYER_JOINED:
+		case actions.PLAYERS:
 			return {
 				...state,
-				players: [...state.players, action.payload],
+				players: action.payload,
 			};
 		default:
 			return state;

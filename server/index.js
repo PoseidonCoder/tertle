@@ -12,11 +12,12 @@ io.on("connection", (socket) => {
 	socket.on("action", ({ type, payload }) => {
 		switch (type.split("server/")[1]) {
 			case "JOIN_GAME":
+				if (!rooms[payload]) rooms[payload] = { players: [] };
+				rooms[payload].players.push(socket.id);
 				socket.join(payload);
 				io.sockets
 					.in(payload)
-					.emit("action", { type: "PLAYER_JOINED", payload: socket.id });
-				if (!rooms[payload]) rooms[socket.id] = {};
+					.emit("action", { type: "PLAYERS", payload: rooms[payload].players });
 				break;
 		}
 	});
