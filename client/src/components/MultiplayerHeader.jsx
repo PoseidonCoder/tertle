@@ -1,18 +1,19 @@
 import { Text, View } from "react-native";
 import styles from "../styles";
 import { AntDesign } from "@expo/vector-icons";
+import { connect } from "react-redux";
 
-export default function MultiplayerHeader() {
-	return (
-		<View
-			style={{
-				flexDirection: "row",
-				flex: 1,
-				alignItems: "center",
-			}}
-		>
-			<Text style={styles.headerText}>Multiplayer</Text>
+const MultiplayerHeader = ({ started }) => (
+	<View
+		style={{
+			flexDirection: "row",
+			flex: 1,
+			alignItems: "center",
+		}}
+	>
+		<Text style={styles.headerText}>Multiplayer</Text>
 
+		{started && (
 			<View
 				style={{
 					flexDirection: "row",
@@ -28,6 +29,10 @@ export default function MultiplayerHeader() {
 				/>
 				<Text style={styles.headerText}>0:00</Text>
 			</View>
-		</View>
-	);
-}
+		)}
+	</View>
+);
+
+const mapStateToProps = ({ multiplayer: { started } }) => ({ started });
+
+export default connect(mapStateToProps)(MultiplayerHeader);
