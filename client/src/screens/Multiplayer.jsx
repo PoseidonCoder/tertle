@@ -7,7 +7,7 @@ import styles from "../styles";
 import socket from "../socket";
 
 const Multiplayer = ({ players, route, join_game }) => {
-	useEffect(() => join_game(route?.params?.id), []);
+	useEffect(() => join_game(route.params.id), []);
 
 	return (
 		<View style={styles.container}>
