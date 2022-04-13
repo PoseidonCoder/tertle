@@ -14,3 +14,5 @@ export const join_game = (id = null) => ({
 });
 
 export const leave_game = (id) => ({ type: actions.LEAVE_GAME, payload: id });
+
+export const start_game = () => ({ type: actions.START_GAME });
