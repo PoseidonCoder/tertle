@@ -6,7 +6,9 @@ import socket from "./socket";
 
 const composedEnhancers = compose(
 	applyMiddleware(createSocketIOMiddleware(socket), asyncDispatchMiddleware),
-	window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+	window.__REDUX_DEVTOOLS_EXTENSION__
+		? window.__REDUX_DEVTOOLS_EXTENSION__()
+		: (f) => f
 );
 
 const store = createStore(reducers, undefined, composedEnhancers);
