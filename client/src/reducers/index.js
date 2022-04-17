@@ -1,5 +1,5 @@
 import { combineReducers } from "redux";
-import board from "./board";
+import singleplayer from "./singleplayer";
 import multiplayer from "./multiplayer";
 
-export default combineReducers({ board, multiplayer });
+export default combineReducers({ singleplayer, multiplayer });

@@ -1,45 +1,40 @@
 import { View, Text } from "react-native";
-import { connect } from "react-redux";
 import styles from "../styles";
-import { charColor } from "../util";
 
-const Board = ({ board, renderRows, answer }) =>
-	board.map((row, i) => (
-		<View style={styles.row} key={i}>
-			{row.map((char, k) => (
-				<View
-					style={
-						i < renderRows
-							? [
-									styles.tile,
-									{
-										backgroundColor: charColor(answer, char, k),
-										borderWidth: 0,
-									},
-							  ]
-							: styles.tile
-					}
-					key={k}
-				>
-					<Text
-						style={[
-							styles.tileText,
-							{
-								color: i < renderRows ? "white" : "black",
-							},
-						]}
+const Board = ({ board }) => (
+	<View style={{ flexDirection: "column", margin: 5 }}>
+		{board.map((row, i) => (
+			<View style={styles.row} key={i}>
+				{row.map((char, k) => (
+					<View
+						style={
+							char.color
+								? [
+										styles.tile,
+										{
+											backgroundColor: char.color,
+											borderWidth: 0,
+										},
+								  ]
+								: styles.tile
+						}
+						key={k}
 					>
-						{char}
-					</Text>
-				</View>
-			))}
-		</View>
-	));
+						<Text
+							style={[
+								styles.tileText,
+								{
+									color: char.color ? "white" : "black",
+								},
+							]}
+						>
+							{char.text}
+						</Text>
+					</View>
+				))}
+			</View>
+		))}
+	</View>
+);
 
-const mapStateToProps = ({ board: { board, renderRows, answer } }) => ({
-	board,
-	renderRows,
-	answer,
-});
-
-export default connect(mapStateToProps)(Board);
+export default Board;

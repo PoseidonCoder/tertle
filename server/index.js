@@ -1,5 +1,14 @@
 import { createServer } from "http";
 import { Server } from "socket.io";
+import fs from "fs";
+
+let words;
+
+try {
+	words = fs.readFileSync("words.txt").toString().split("\n");
+} catch (err) {
+	console.error(err);
+}
 
 const server = createServer();
 const io = new Server(server, {
@@ -8,13 +17,38 @@ const io = new Server(server, {
 
 let rooms = {};
 
+const charColor = (answer, char, i) =>
+	answer.includes(char.toLowerCase())
+		? answer.indexOf(char.toLowerCase()) === i
+			? "#6aaa64"
+			: "#c9b458"
+		: "#86888a";
+
 io.on("connection", (socket) => {
-	socket.on("action", ({ type, payload }) => {
+	const cleanBoards = () => {
+		let cleanedBoards = {};
+		for (const id in rooms[socket.data.room].players) {
+			const player = rooms[socket.data.room].players[id];
+			cleanedBoards[id] = {
+				...player,
+				board: player.board.map((row) =>
+					row.map((cell) => ({ ...cell, text: "" }))
+				),
+			};
+		}
+		return cleanedBoards;
+	};
+
+	socket.on("action", ({ type, payload }, callback) => {
 		switch (type.split("server/")[1]) {
 			case "JOIN_GAME":
-				if (!rooms[payload]) rooms[payload] = { players: [] };
-				rooms[payload].players.push(socket.id);
+				if (!rooms[payload]) rooms[payload] = { players: {} };
+				rooms[payload].players[socket.id] = {
+					board: [...Array(6)].map(() => Array(5).fill({ text: "" })),
+				};
 				socket.join(payload);
+				rooms[payload].answer = words[Math.floor(Math.random() * words.length)];
+				socket.data.room = payload;
 
 				if (rooms[payload].started)
 					socket.emit({
@@ -28,13 +62,12 @@ io.on("connection", (socket) => {
 				break;
 
 			case "LEAVE_GAME":
-				rooms[payload].players = rooms[payload].players.filter(
-					(id) => id != socket.id
-				);
-				socket.leave(payload);
-				io.sockets
-					.in(payload)
-					.emit("action", { type: "PLAYERS", payload: rooms[payload].players });
+				delete rooms[socket.data.room].players[socket.id];
+				socket.leave(socket.data.room);
+				io.sockets.in(socket.data.room).emit("action", {
+					type: "PLAYERS",
+					payload: cleanBoards(),
+				});
 				break;
 
 			case "START_GAME":
@@ -42,11 +75,51 @@ io.on("connection", (socket) => {
 					rooms[socket.id].time = new Date().getTime();
 					rooms[socket.id].started = true;
 
-					io.sockets.in(socket.id).emit("action", {
+					io.in(socket.id).emit("action", {
 						type: "GAME_STARTED",
 						payload: rooms[socket.id].time,
 					});
 				}
+
+				break;
+
+			case "SUBMITTED":
+				const newBoard = payload.board.map((row, i) => {
+					if (i != payload.currentRow) return row;
+
+					let correct = 0;
+
+					const coloredRow = row.map((char, i) => {
+						const color = charColor(
+							rooms[socket.data.room].answer,
+							char.text,
+							i
+						);
+						char.color = color;
+						payload.guessStatus[char.text] = color;
+
+						if (color === "#6aaa64") correct++;
+
+						return char;
+					});
+
+					if (correct === 5) {
+						console.log("won");
+					}
+
+					return coloredRow;
+				});
+
+				rooms[socket.data.room].players[socket.id].board = newBoard;
+
+				io.in(socket.data.room).emit("action", {
+					type: "PLAYERS",
+					payload: cleanBoards(),
+				});
+
+				callback({ board: newBoard, guessStatus: payload.guessStatus });
+
+				break;
 		}
 	});
 });

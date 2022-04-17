@@ -50,7 +50,11 @@ const MultiplayerHeader = ({ started, time }) => {
 	);
 };
 
-const mapStateToProps = ({ multiplayer: { started, time } }) => ({
+const mapStateToProps = ({
+	multiplayer: {
+		multiplayer: { started, time },
+	},
+}) => ({
 	started,
 	time,
 });

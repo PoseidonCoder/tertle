@@ -1,7 +1,12 @@
+import { combineReducers } from "redux";
 import * as actions from "../constants";
+import board from "./domain/board";
+import * as util from "../util";
+import socket from "../socket";
+import { set_board } from "../actions";
 
 const INITIAL_STATE = {
-	players: [],
+	players: {},
 	time: null,
 	started: false,
 };
@@ -26,4 +31,18 @@ const multiplayer = (state = INITIAL_STATE, action) => {
 	}
 };
 
-export default multiplayer;
+const submitToServer = (state, action) => {
+	socket.emit(
+		"action",
+		{
+			type: "server/" + actions.SUBMITTED,
+			payload: state,
+		},
+		(board) => action.asyncDispatch(set_board(board, "multiplayer"))
+	);
+};
+
+export default combineReducers({
+	multiplayer,
+	board: util.createNamedWrapperReducer(board(submitToServer), "multiplayer"),
+});

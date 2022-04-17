@@ -81,11 +81,16 @@ const Keyboard = ({
 		</View>
 	));
 
-const mapStateToProps = ({
-	board: { submit, guess, board, currentRow, guessStatus, guessValue },
-}) => ({ submit, guess, board, currentRow, guessStatus, guessValue });
+const mapStateToProps = (state, { mode }) => ({
+	submit: state[mode].board.submit,
+	guess: state[mode].board.guess,
+	board: state[mode].board.board,
+	currentRow: state[mode].board.currentRow,
+	guessStatus: state[mode].board.guessStatus,
+	guessValue: state[mode].board.guessValue,
+});
 
-const mapDispatchToProps = (dispatch) =>
-	bindActionCreators({ submit, type }, dispatch);
+const mapDispatchToProps = (dispatch, { mode }) =>
+	bindActionCreators({ submit: submit(mode), type: type(mode) }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Keyboard);

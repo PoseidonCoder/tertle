@@ -2,12 +2,21 @@ import { View } from "react-native";
 import styles from "../styles";
 import Board from "../components/Board";
 import Keyboard from "../components/Keyboard";
+import { connect } from "react-redux";
 
-const Singleplayer = () => (
+const Singleplayer = ({ board }) => (
 	<View style={styles.container}>
-		<Board />
-		<Keyboard />
+		<Board board={board} />
+		<Keyboard mode="singleplayer" />
 	</View>
 );
 
-export default Singleplayer;
+const mapStateToProps = ({
+	singleplayer: {
+		board: { board },
+	},
+}) => ({
+	board,
+});
+
+export default connect(mapStateToProps)(Singleplayer);
