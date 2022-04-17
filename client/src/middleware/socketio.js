@@ -1,5 +1,3 @@
-import * as actions from "../constants";
-
 const createSocketIOMiddleware =
 	(socket, { eventName = "action" } = {}) =>
 	({ dispatch }) => {
