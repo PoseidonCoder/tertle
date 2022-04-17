@@ -5,7 +5,8 @@
 	"license": "MIT",
 	"type": "module",
 	"scripts": {
-		"start": "nodemon ."
+		"start": "nodemon .",
+		"push": "git subtree push --prefix server heroku master"
 	},
 	"dependencies": {
 		"nodemon": "^2.0.15",
