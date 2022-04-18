@@ -10,7 +10,9 @@ const MultiplayerHeader = ({ started, time }) => {
 
 	useEffect(() => {
 		const id = setInterval(() => {
-			setDelta(new Date(new Date() - time));
+			setDelta(
+				time ? new Date(new Date() - time) : new Date(new Date() - new Date())
+			);
 		}, 1000);
 
 		return () => clearInterval(id);
@@ -24,13 +26,14 @@ const MultiplayerHeader = ({ started, time }) => {
 				alignItems: "center",
 			}}
 		>
-			<Text style={styles.headerText}>Multiplayer</Text>
-
+			<View style={{ marginRight: "auto" }}>
+				<Text style={styles.headerText}>Multiplayer</Text>
+			</View>
 			{started && (
 				<View
 					style={{
 						flexDirection: "row",
-						justifyContent: "flex-end",
+						alignItems: "flex-end",
 						flex: 1,
 					}}
 				>
