@@ -26,15 +26,11 @@ const MultiplayerHeader = ({ started, time }) => {
 				alignItems: "center",
 			}}
 		>
-			<View style={{ marginRight: "auto" }}>
-				<Text style={styles.headerText}>Multiplayer</Text>
-			</View>
+			<Text style={styles.headerText}>Multiplayer</Text>
 			{started && (
 				<View
 					style={{
 						flexDirection: "row",
-						alignItems: "flex-end",
-						flex: 1,
 					}}
 				>
 					{delta && (

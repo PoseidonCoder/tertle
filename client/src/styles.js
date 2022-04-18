@@ -18,8 +18,8 @@ export default StyleSheet.create({
 	tile: {
 		borderWidth: 2,
 		borderColor: "lightgray",
-		width: 50,
-		height: 50,
+		width: 45,
+		height: 45,
 		margin: 2,
 	},
 	tileText: {

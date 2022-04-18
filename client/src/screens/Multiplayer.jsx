@@ -35,17 +35,22 @@ const Multiplayer = ({
 		}
 	};
 
+	const playerWonStatus = (id) =>
+		players[id].won !== undefined && `(${players[id].won ? "won" : "lost"})`;
+
 	return (
 		<View style={styles.container}>
 			{started ? (
 				<>
 					<View style={styles.row}>
-						<LabeledBoard board={board}>You</LabeledBoard>
+						<LabeledBoard board={board}>
+							You {playerWonStatus(socket.id)}
+						</LabeledBoard>
 						{Object.keys(players).map(
 							(id) =>
 								id !== socket.id && (
 									<LabeledBoard key={id} board={players[id].board}>
-										{id}
+										{id} {playerWonStatus(id)}
 									</LabeledBoard>
 								)
 						)}
