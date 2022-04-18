@@ -9,6 +9,7 @@ const INITIAL_STATE = {
 	players: {},
 	time: null,
 	started: false,
+	finished: false,
 };
 
 const multiplayer = (state = INITIAL_STATE, action) => {
@@ -24,6 +25,13 @@ const multiplayer = (state = INITIAL_STATE, action) => {
 				...state,
 				time: action.payload,
 				started: true,
+			};
+
+		case actions.SHOW_ANSWER:
+			alert("The answer was: " + action.payload);
+			return {
+				...state,
+				finished: true,
 			};
 
 		default:

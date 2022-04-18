@@ -84,8 +84,19 @@ io.on("connection", (socket) => {
 				break;
 
 			case "SUBMITTED":
-				if (!payload.won && payload.board[5][4].text !== "")
+				if (!payload.won && payload.board[5][4].text !== "") {
 					rooms[socket.data.room].players[socket.id].won = false;
+					if (
+						Object.keys(rooms[socket.data.room].players).every(
+							(id) => rooms[socket.data.room].players[id].won !== undefined
+						)
+					) {
+						io.in(socket.data.room).emit("action", {
+							type: "SHOW_ANSWER",
+							payload: rooms[socket.data.room].answer,
+						});
+					}
+				}
 
 				const newBoard = payload.board.map((row, i) => {
 					if (i != payload.currentRow) return row;

@@ -8,3 +8,4 @@ export const START_GAME = "server/START_GAME";
 export const PLAYERS = "PLAYERS";
 export const GAME_STARTED = "GAME_STARTED";
 export const SETTED_BOARD = "SETTED_BOARD";
+export const SHOW_ANSWER = "SHOW_ANSWER";
