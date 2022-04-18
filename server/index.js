@@ -84,7 +84,7 @@ io.on("connection", (socket) => {
 				break;
 
 			case "SUBMITTED":
-				if (!state.won && state.board[5][4].text !== "")
+				if (!payload.won && payload.board[5][4].text !== "")
 					rooms[socket.data.room].players[socket.id].won = false;
 
 				const newBoard = payload.board.map((row, i) => {
