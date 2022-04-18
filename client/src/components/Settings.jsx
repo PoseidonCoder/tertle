@@ -28,6 +28,10 @@ const Settings = ({ visible, onClose, answer }) => (
 	</Modal>
 );
 
-const mapStateToProps = ({ singleplayer: { answer } }) => ({ answer });
+const mapStateToProps = ({
+	singleplayer: {
+		board: { answer },
+	},
+}) => ({ answer });
 
 export default connect(mapStateToProps)(Settings);
