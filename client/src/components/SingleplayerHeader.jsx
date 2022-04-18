@@ -36,7 +36,11 @@ const SingplayerHeader = ({ current, next, back }) => {
 	);
 };
 
-const mapStateToProps = ({ singleplayer: { current } }) => ({
+const mapStateToProps = ({
+	singleplayer: {
+		board: { current },
+	},
+}) => ({
 	current,
 });
 
