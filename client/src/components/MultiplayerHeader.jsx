@@ -3,6 +3,7 @@ import styles from "../styles";
 import { AntDesign } from "@expo/vector-icons";
 import { connect } from "react-redux";
 import { useEffect, useState } from "react";
+import * as util from "../util";
 
 const MultiplayerHeader = ({ started, time }) => {
 	const [delta, setDelta] = useState();
@@ -35,7 +36,8 @@ const MultiplayerHeader = ({ started, time }) => {
 				>
 					{delta && (
 						<Text style={styles.headerText}>
-							{delta.getMinutes()}:{delta.getSeconds()}
+							{util.addExtraZero(delta.getMinutes())}:
+							{util.addExtraZero(delta.getSeconds())}
 						</Text>
 					)}
 					<AntDesign

@@ -25,3 +25,6 @@ export const createNamedWrapperReducer =
 		if (action.name !== reducerName && state !== undefined) return state;
 		return reducerFunction(state, action);
 	};
+
+export const addExtraZero = (num) =>
+	`${JSON.stringify(num).length === 1 ? 0 : ""}${num}`;
