@@ -7,7 +7,6 @@ import socket from "../socket";
 import { useFocusEffect } from "@react-navigation/native";
 import { useCallback } from "react";
 import Keyboard from "../components/Keyboard";
-import Board from "../components/Board";
 import LabeledBoard from "../components/LabeledBoard";
 
 const Multiplayer = ({
