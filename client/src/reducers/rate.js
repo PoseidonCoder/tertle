@@ -4,6 +4,9 @@ import { set_board } from "../actions";
 const rate = (state, action) => {
 	const newGuessStatus = { ...state.guessStatus };
 
+	if (!state.won && state.board[5][4].text !== "")
+		alert("The answer was: " + state.answer);
+
 	const newBoard = state.board.map((row, i) => {
 		if (i != state.currentRow) return row;
 

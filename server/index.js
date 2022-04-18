@@ -84,6 +84,9 @@ io.on("connection", (socket) => {
 				break;
 
 			case "SUBMITTED":
+				if (!state.won && state.board[5][4].text !== "")
+					rooms[socket.data.room].players[socket.id].won = false;
+
 				const newBoard = payload.board.map((row, i) => {
 					if (i != payload.currentRow) return row;
 
@@ -103,9 +106,8 @@ io.on("connection", (socket) => {
 						return char;
 					});
 
-					if (correct === 5) {
-						console.log("won");
-					}
+					if (correct === 5)
+						rooms[socket.data.room].players[socket.id].won = true;
 
 					return coloredRow;
 				});

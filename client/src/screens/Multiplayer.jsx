@@ -8,6 +8,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import { useCallback } from "react";
 import Keyboard from "../components/Keyboard";
 import Board from "../components/Board";
+import LabeledBoard from "../components/LabeledBoard";
 
 const Multiplayer = ({
 	players,
@@ -39,10 +40,14 @@ const Multiplayer = ({
 			{started ? (
 				<>
 					<View style={styles.row}>
-						<Board board={board} />
+						<LabeledBoard board={board}>You</LabeledBoard>
 						{Object.keys(players).map(
 							(id) =>
-								id !== socket.id && <Board key={id} board={players[id].board} />
+								id !== socket.id && (
+									<LabeledBoard key={id} board={players[id].board}>
+										{id}
+									</LabeledBoard>
+								)
 						)}
 					</View>
 

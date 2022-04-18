@@ -9,14 +9,13 @@ const submit = (state, action, { rate }) => {
 		state.wordle.words.includes(state.guessValue) ||
 		state.wordle.answers.includes(state.guessValue)
 	) {
-		const done = state.board[5][4].text !== "";
-
-		if (!state.won && done) alert("The answer was: " + state.answer);
-
 		rate(state, action);
 
 		return util.updateObject(state, {
-			currentRow: done ? state.currentRow : (state.currentRow += 1),
+			currentRow:
+				state.board[5][4].text !== ""
+					? state.currentRow
+					: (state.currentRow += 1),
 			currentColumn: 0,
 			guessValue: "",
 		});
