@@ -20,7 +20,7 @@ const submit = (state, action, { rate }) => {
 			guessValue: "",
 		});
 	} else {
-		alert("Not in word list");
+		alert("That's not a word");
 
 		return util.updateObject(state, {
 			board: state.board.map((row, i) =>
