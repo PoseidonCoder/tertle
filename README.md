@@ -14,4 +14,8 @@ An all-in-one Wordle clone
 
 With this clone you will never be constrained by one word a day! This clone contains the full Wordle history! When you load the page, by default, it will have the day's current Wordle answer. You can go back and forth in time by using the left and right arrow buttons. The Wordle word and answer list was taken straight from Wordle's source code.
 
-![Tertle Singleplayer Gameplay Demonstration](demo.png)
+![Tertle Singleplayer Demonstration](singleplayer_demo.png)
+
+We also include a multiplayer gamemode so that you can play against your friends!
+
+![Tertle Multiplayer Demonstration](multiplayer_demo.png)
