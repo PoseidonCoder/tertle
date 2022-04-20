@@ -30,6 +30,9 @@ export default function App() {
 				<Stack.Navigator
 					screenOptions={{
 						headerTitleAlign: "center",
+						headerStyle: {
+							height: 45,
+						},
 					}}
 				>
 					<Stack.Screen name="Home" component={Home} />
