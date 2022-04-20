@@ -24,7 +24,7 @@ const submit = (state, action, { rate }) => {
 
 		return util.updateObject(state, {
 			board: state.board.map((row, i) =>
-				state.currentRow === i ? new Array(5).fill("") : row
+				state.currentRow === i ? { text: new Array(5).fill("") } : row
 			),
 			currentColumn: 0,
 			guessValue: "",
@@ -35,7 +35,8 @@ const submit = (state, action, { rate }) => {
 const type = (state, action) =>
 	(action.payload.match(/[a-z]/i) || action.payload == "") &&
 	!state.won &&
-	action.payload.length < 6
+	action.payload.length < 6 &&
+	state.board[5][4].text === ""
 		? util.updateObject(state, {
 				board: state.board.map((row, i) =>
 					i === state.currentRow
