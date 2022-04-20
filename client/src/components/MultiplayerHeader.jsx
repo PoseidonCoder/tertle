@@ -8,17 +8,15 @@ import * as util from "../util";
 const MultiplayerHeader = ({ started, time, finished }) => {
 	const [delta, setDelta] = useState();
 
-	const adjustClock = () => {
-		console.log(finished);
-		if (finished) clearInterval(id);
-		else setDelta(new Date(new Date() - time));
-	};
-
 	useEffect(() => {
-		const id = setInterval(adjustClock, 1000);
+		const id = setInterval(
+			() =>
+				finished ? clearInterval(id) : setDelta(new Date(new Date() - time)),
+			1000
+		);
 
 		return () => clearInterval(id);
-	}, [time]);
+	}, [time, finished]);
 
 	return (
 		<View
