@@ -50,15 +50,16 @@ io.on("connection", (socket) => {
 				rooms[payload].answer = words[Math.floor(Math.random() * words.length)];
 				socket.data.room = payload;
 
+				io.sockets
+					.in(payload)
+					.emit("action", { type: "PLAYERS", payload: rooms[payload].players });
+
 				if (rooms[payload].started)
-					socket.emit({
+					socket.emit("action", {
 						type: "GAME_STARTED",
 						payload: rooms[payload].time,
 					});
 
-				io.sockets
-					.in(payload)
-					.emit("action", { type: "PLAYERS", payload: rooms[payload].players });
 				break;
 
 			case "LEAVE_GAME":
