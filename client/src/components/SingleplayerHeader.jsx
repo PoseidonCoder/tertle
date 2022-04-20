@@ -18,17 +18,20 @@ const SingplayerHeader = ({ current, next, back }) => {
 			/>
 
 			<View style={styles.header}>
-				<TouchableOpacity onPress={back}>
+				<TouchableOpacity style={styles.headerIcon} onPress={back}>
 					<AntDesign name="caretleft" size={18} color="black" />
 				</TouchableOpacity>
 
 				<Text style={styles.headerText}>Wordle#{current}</Text>
 
-				<TouchableOpacity onPress={next}>
+				<TouchableOpacity style={styles.headerIcon} onPress={next}>
 					<AntDesign name="caretright" size={18} color="black" />
 				</TouchableOpacity>
 
-				<TouchableOpacity onPress={() => setShowSettings(!showSettings)}>
+				<TouchableOpacity
+					style={styles.headerIcon}
+					onPress={() => setShowSettings(!showSettings)}
+				>
 					<Fontisto name="spinner-cog" size={18} color="black" />
 				</TouchableOpacity>
 			</View>

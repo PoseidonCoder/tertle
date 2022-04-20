@@ -27,7 +27,11 @@ export default function App() {
 	return (
 		<Provider store={store}>
 			<NavigationContainer linking={linking}>
-				<Stack.Navigator>
+				<Stack.Navigator
+					screenOptions={{
+						headerTitleAlign: "center",
+					}}
+				>
 					<Stack.Screen name="Home" component={Home} />
 					<Stack.Screen
 						name="Singleplayer"
