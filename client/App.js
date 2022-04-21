@@ -31,7 +31,7 @@ export default function App() {
 					screenOptions={{
 						headerTitleAlign: "center",
 						headerStyle: {
-							height: 45,
+							height: 40,
 						},
 					}}
 				>
