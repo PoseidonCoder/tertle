@@ -1,6 +1,5 @@
 import Singleplayer from "./src/screens/Singleplayer";
 import SingleplayerHeader from "./src/components/SingleplayerHeader";
-import MultiplayerHeader from "./src/components/MultiplayerHeader";
 import Multiplayer from "./src/screens/Multiplayer";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -8,6 +7,9 @@ import Home from "./src/screens/Home";
 import { Provider } from "react-redux";
 import store from "./src/store";
 import SettingsHeaderRight from "./src/components/SettingsHeaderRight";
+import styles from "./src/styles";
+import MultiplayerHeaderClock from "./src/components/MultiplayerHeaderClock";
+import { Text } from "react-native";
 
 const Stack = createNativeStackNavigator();
 
@@ -41,14 +43,19 @@ export default function App() {
 						name="Singleplayer"
 						component={Singleplayer}
 						options={() => ({
-							headerTitle: () => <SingleplayerHeader />,
+							headerTitle: SingleplayerHeader,
 							headerRight: SettingsHeaderRight,
 						})}
 					/>
 					<Stack.Screen
 						name="Multiplayer"
 						component={Multiplayer}
-						options={{ headerTitle: () => <MultiplayerHeader /> }}
+						options={{
+							headerTitle: () => (
+								<Text style={styles.headerText}>Multiplayer</Text>
+							),
+							headerRight: () => <MultiplayerHeaderClock />,
+						}}
 					/>
 				</Stack.Navigator>
 			</NavigationContainer>
