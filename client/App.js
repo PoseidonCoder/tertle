@@ -7,6 +7,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Home from "./src/screens/Home";
 import { Provider } from "react-redux";
 import store from "./src/store";
+import SettingsHeaderRight from "./src/components/SettingsHeaderRight";
 
 const Stack = createNativeStackNavigator();
 
@@ -41,6 +42,7 @@ export default function App() {
 						component={Singleplayer}
 						options={() => ({
 							headerTitle: () => <SingleplayerHeader />,
+							headerRight: SettingsHeaderRight,
 						})}
 					/>
 					<Stack.Screen
