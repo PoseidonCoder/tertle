@@ -1,4 +1,4 @@
-import { Text, View, Share, Button, TextInput } from "react-native";
+import { Text, View, Share, Button, TextInput, ScrollView } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { join_game, leave_game, start_game, send_nick } from "../actions";
@@ -52,17 +52,19 @@ const Multiplayer = ({
 			{started ? (
 				<>
 					<View style={styles.row}>
-						<LabeledBoard board={board}>
-							You {playerWonStatus(socket.id)}
-						</LabeledBoard>
-						{Object.keys(players).map(
-							(id) =>
-								id !== socket.id && (
-									<LabeledBoard key={id} board={players[id].board}>
-										{players[id].nickname} {playerWonStatus(id)}
-									</LabeledBoard>
-								)
-						)}
+						<ScrollView horizontal>
+							<LabeledBoard board={board}>
+								You {playerWonStatus(socket.id)}
+							</LabeledBoard>
+							{Object.keys(players).map(
+								(id) =>
+									id !== socket.id && (
+										<LabeledBoard key={id} board={players[id].board}>
+											{players[id].nickname} {playerWonStatus(id)}
+										</LabeledBoard>
+									)
+							)}
+						</ScrollView>
 					</View>
 
 					<Keyboard mode="multiplayer" />
