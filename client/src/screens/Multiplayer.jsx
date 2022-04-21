@@ -1,11 +1,11 @@
-import { Text, View, Share, Button } from "react-native";
+import { Text, View, Share, Button, TextInput } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { join_game, leave_game, start_game } from "../actions";
+import { join_game, leave_game, start_game, send_nick } from "../actions";
 import styles from "../styles";
 import socket from "../socket";
 import { useFocusEffect } from "@react-navigation/native";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import Keyboard from "../components/Keyboard";
 import LabeledBoard from "../components/LabeledBoard";
 
@@ -15,9 +15,13 @@ const Multiplayer = ({
 	join_game,
 	leave_game,
 	start_game,
+	send_nick,
 	started,
 	board,
+	nickname,
 }) => {
+	const [nick, setNick] = useState("");
+
 	useFocusEffect(
 		useCallback(() => {
 			join_game(route.params.id);
@@ -35,7 +39,13 @@ const Multiplayer = ({
 	};
 
 	const playerWonStatus = (id) =>
-		players[id].won !== undefined && `(${players[id].won ? "won" : "lost"})`;
+		players[id].won !== undefined && (
+			<Text
+				style={{ fontWeight: "bold", color: players[id].won ? "green" : "red" }}
+			>
+				({players[id].won ? "won" : "lost"})
+			</Text>
+		);
 
 	return (
 		<View style={styles.container}>
@@ -49,7 +59,7 @@ const Multiplayer = ({
 							(id) =>
 								id !== socket.id && (
 									<LabeledBoard key={id} board={players[id].board}>
-										{id} {playerWonStatus(id)}
+										{players[id].nickname} {playerWonStatus(id)}
 									</LabeledBoard>
 								)
 						)}
@@ -57,11 +67,21 @@ const Multiplayer = ({
 
 					<Keyboard mode="multiplayer" />
 				</>
+			) : !nickname ? (
+				<>
+					<Text>Enter your nickname:</Text>
+					<TextInput
+						style={styles.input}
+						value={nick}
+						onChangeText={(txt) => setNick(txt)}
+					/>
+					<Button title="play" onPress={() => send_nick(nick)} />
+				</>
 			) : (
 				<>
 					<Text>Joined:</Text>
 					{Object.keys(players).map((id) => (
-						<Text key={id}>{id}</Text>
+						<Text key={id}>{players[id].nickname}</Text>
 					))}
 					<Button title="share link" onPress={shareLink} />
 					{route.params.id === socket.id && (
@@ -75,15 +95,19 @@ const Multiplayer = ({
 
 const mapStateToProps = ({
 	multiplayer: {
-		multiplayer: { players, started },
+		multiplayer: { players, started, nickname },
 		board: { board },
 	},
 }) => ({
 	players,
 	started,
 	board,
+	nickname,
 });
 const mapDispatchToProps = (dispatch) =>
-	bindActionCreators({ join_game, leave_game, start_game }, dispatch);
+	bindActionCreators(
+		{ join_game, leave_game, start_game, send_nick },
+		dispatch
+	);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Multiplayer);

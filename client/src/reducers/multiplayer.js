@@ -10,6 +10,7 @@ const INITIAL_STATE = {
 	time: null,
 	started: false,
 	finished: false,
+	nickname: null,
 };
 
 const multiplayer = (state = INITIAL_STATE, action) => {
@@ -32,6 +33,12 @@ const multiplayer = (state = INITIAL_STATE, action) => {
 			return {
 				...state,
 				finished: true,
+			};
+
+		case actions.APPROVED_NICK:
+			return {
+				...state,
+				nickname: action.payload,
 			};
 
 		default:

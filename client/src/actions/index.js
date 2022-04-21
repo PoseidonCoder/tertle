@@ -26,3 +26,5 @@ export const set_board = (board, mode) => ({
 	payload: board,
 	name: mode,
 });
+
+export const send_nick = (nick) => ({ type: actions.SEND_NICK, payload: nick });

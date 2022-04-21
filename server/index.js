@@ -84,6 +84,25 @@ io.on("connection", (socket) => {
 
 				break;
 
+			case "SEND_NICK":
+				if (rooms[socket.data.room]) {
+					rooms[socket.data.room].players[socket.id].nickname = payload;
+
+					socket.emit("action", {
+						type: "APPROVED_NICK",
+						payload,
+					});
+
+					const boards = cleanBoards();
+
+					io.sockets.in(socket.data.room).emit("action", {
+						type: "PLAYERS",
+						payload: boards,
+					});
+				}
+
+				break;
+
 			case "SUBMITTED":
 				if (!payload.won && payload.board[5][4].text !== "") {
 					rooms[socket.data.room].players[socket.id].won = false;
