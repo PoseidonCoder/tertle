@@ -39,7 +39,14 @@ export default function App() {
 						},
 					}}
 				>
-					<Drawer.Screen name="Singleplayer" component={Singleplayer} />
+					<Drawer.Screen
+						name="Singleplayer"
+						component={Singleplayer}
+						options={{
+							headerRight: SettingsHeaderRight,
+							headerTitle: () => <SingleplayerHeader />,
+						}}
+					/>
 					<Drawer.Screen
 						name="Multiplayer"
 						component={Multiplayer}
