@@ -1,6 +1,7 @@
 {
 	"expo": {
 		"name": "client",
+		"main": "App.js",
 		"slug": "client",
 		"version": "1.0.0",
 		"orientation": "portrait",
