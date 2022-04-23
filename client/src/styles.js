@@ -7,7 +7,7 @@ export default StyleSheet.create({
 		color: "rgb(28, 28, 30)",
 	},
 	headerIcon: {
-		marginTop: 3,
+		marginTop: 2,
 	},
 	container: {
 		flex: 1,
