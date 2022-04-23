@@ -24,7 +24,7 @@ const submit = (state, action, { rate }) => {
 
 		return util.updateObject(state, {
 			board: state.board.map((row, i) =>
-				state.currentRow === i ? { text: new Array(5).fill("") } : row
+				state.currentRow === i ? new Array(5).fill({ text: "" }) : row
 			),
 			currentColumn: 0,
 			guessValue: "",
