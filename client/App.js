@@ -8,7 +8,6 @@ import store from "./src/store";
 import SettingsHeaderRight from "./src/components/SettingsHeaderRight";
 import MultiplayerHeaderClock from "./src/components/MultiplayerHeaderClock";
 import { createDrawerNavigator } from "@react-navigation/drawer";
-import socket from "./src/socket";
 
 const config = {
 	screens: {
@@ -50,9 +49,6 @@ export default function App() {
 					<Drawer.Screen
 						name="Multiplayer"
 						component={Multiplayer}
-						initialParams={{
-							id: socket.id,
-						}}
 						options={{
 							headerRight: () => <MultiplayerHeaderClock />,
 						}}

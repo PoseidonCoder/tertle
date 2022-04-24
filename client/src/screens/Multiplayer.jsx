@@ -19,11 +19,14 @@ const Multiplayer = ({
 	started,
 	board,
 	nickname,
+	navigation,
 }) => {
 	const [nick, setNick] = useState("");
 
 	useFocusEffect(
 		useCallback(() => {
+			if (!route.params?.id) return navigation.setParams({ id: socket.id });
+
 			join_game(route.params.id);
 
 			return () => leave_game(route.params.id);
