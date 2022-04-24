@@ -1,6 +1,9 @@
 import * as actions from "../../constants";
 import wordle from "../../../wordle.json";
 import * as util from "../../util";
+import { Animated, Easing } from "react-native";
+
+const emptyCell = { text: "", scale: new Animated.Value(1) };
 
 const submit = (state, action, { rate }) => {
 	if (state.board[state.currentRow][4].text === "") return state;
@@ -24,7 +27,9 @@ const submit = (state, action, { rate }) => {
 
 		return util.updateObject(state, {
 			board: state.board.map((row, i) =>
-				state.currentRow === i ? new Array(5).fill({ text: "" }) : row
+				state.currentRow === i
+					? new Array(5).fill(Object.assign({}, emptyCell))
+					: row
 			),
 			currentColumn: 0,
 			guessValue: "",
@@ -40,9 +45,21 @@ const type = (state, action) =>
 		? util.updateObject(state, {
 				board: state.board.map((row, i) =>
 					i === state.currentRow
-						? row.map((_, k) => ({
-								text: action.payload[k] ? action.payload[k].toUpperCase() : "",
-						  }))
+						? row.map((cell, k) => {
+								Animated.timing(cell.scale, {
+									useNativeDriver: false,
+									toValue: 1.3,
+									easing: Easing.inOut,
+									duration: 1000,
+								}).start();
+
+								return {
+									...cell,
+									text: action.payload[k]
+										? action.payload[k].toUpperCase()
+										: "",
+								};
+						  })
 						: row
 				),
 				guessValue: action.payload,
@@ -62,7 +79,9 @@ const reset = (state, current) => ({
 	answer: state.wordle.answers[current],
 });
 
-const boardDefault = [...Array(6)].map(() => Array(5).fill({ text: "" }));
+const boardDefault = [...Array(6)].map(() =>
+	Array(5).fill(Object.assign({}, emptyCell))
+);
 
 const current = util.dateToWordle(new Date().getTime());
 
